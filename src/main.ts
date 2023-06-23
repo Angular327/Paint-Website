@@ -3,8 +3,11 @@ import { loadFloor } from './Objects/floor';
 import { loadRenderer } from './Renderer/renderer';
 import { loadCamera } from './Renderer/camera';
 import './style.css';
+import { loadSky } from './Objects/sky';
 
 function init(): void {    
+    let x = 0.0;
+
     //create intial scene
     const scene = new THREE.Scene();
 
@@ -14,8 +17,11 @@ function init(): void {
 
     //loads the main scene
 
-    const floor = loadFloor();
+    const floor = loadFloor(camera, x);
     scene.add(floor);
+
+    const sky = loadSky();
+    scene.add(sky);
 
     //Loop Creation
     //create renderer

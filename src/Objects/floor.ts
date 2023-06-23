@@ -1,18 +1,21 @@
 import * as THREE from 'three';
 import { vertexShader, fragmentShader } from './Shaders/floorShaders';
+import { leftPaint, rightPaint, leftCamera, rightCamera, scale } from '../constants';
 
-function loadFloor(): THREE.Mesh {
+function loadFloor(camera: THREE.Camera, x: number): THREE.Mesh {
   // Create a plane geometry
-  let geometry = new THREE.PlaneGeometry(5, 5, 10, 10);
+  let geometry = new THREE.PlaneGeometry(400, 40);
 
   // Setup uniforms
   let uniforms = {
     color1: { value: new THREE.Vector3(1, 0, 0) },
     color2: { value: new THREE.Vector3(0, 1, 0) },
     u_resolution: { value: new THREE.Vector2(geometry.parameters.width, geometry.parameters.height) },
-    u_bl: { value: new THREE.Vector2(0.0, 0.4) },
-    u_tr: { value: new THREE.Vector2(1.0, 0.6) },
+    u_bl: { value: new THREE.Vector2(leftPaint, 0.45) },
+    u_tr: { value: new THREE.Vector2(leftPaint, 0.55) },
   };
+
+
 
   // Shaders
   let shaderMaterial = new THREE.ShaderMaterial({
@@ -23,22 +26,27 @@ function loadFloor(): THREE.Mesh {
 
   window.addEventListener('wheel', function (event: WheelEvent) {
     // Update u_tr based on mouse wheel delta
-    const output = uniforms.u_tr.value.x;
-    let result = output + event.deltaY * -0.001;
+    x += event.deltaY * scale;
 
-    if(output < 0) {
-        result = 0;
+    if(x < 0) {
+      x = 0;
     }
 
-    if(output > 1) {
-        result = 1;
+    if(x > 1) {
+      x = 1;
     }
 
-    uniforms.u_tr.value.x = result;
+    console.log(uniforms);
+
+    uniforms.u_tr.value.x = THREE.MathUtils.lerp(leftPaint, rightPaint, x);
+    camera.position.x = THREE.MathUtils.lerp(leftCamera, rightCamera, x);
+
   });
 
-
-  return new THREE.Mesh(geometry, shaderMaterial);
+  const plane = new THREE.Mesh(geometry, shaderMaterial);
+  plane.position.set(160, 10, 0)
+  return plane;
+  
 }
 
 export { loadFloor };
