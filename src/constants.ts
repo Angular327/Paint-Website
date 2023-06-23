@@ -9,4 +9,8 @@ export const leftCamera = -20;
 export const rightCamera = 380;
 
 //scale for camera scroll
-export const scale = -0.00001
+export const scrollScale = -0.00002
+
+export const dragScale = -.0001;
+
+export const dragDeceleration = .0001;
