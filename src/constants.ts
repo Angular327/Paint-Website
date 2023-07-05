@@ -1,16 +1,13 @@
-//Paint left and right bound for lerp
-export const leftPaint = .05;
-
+// Paint left and right bounds for lerp
+export const leftPaint = 0.05;
 export const rightPaint = 1;
 
-//Camera max and min for lerp
+// Camera max and min for lerp
 export const leftCamera = -20;
-
 export const rightCamera = 380;
 
-//scale for camera scroll
-export const scrollScale = -0.00002
+// Scale for camera scroll
+export const scrollScale = -0.00002;
 
-export const dragScale = -.0001;
-
-export const dragDeceleration = .0001;
+export const dragScale = -0.0001;
+export const dragDeceleration = 0.0001;

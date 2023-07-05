@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+// Vertex shader code
 export const vertexShader = `
   varying vec2 v_UV;
 
@@ -9,7 +10,8 @@ export const vertexShader = `
   }
 `;
 
-export const  fragmentShader = `
+// Fragment shader code
+export const fragmentShader = `
   uniform vec3 color1;
   uniform vec3 color2;
 
@@ -35,17 +37,19 @@ export const  fragmentShader = `
 
 function loadFloor(uniforms: any): THREE.Mesh {
   // Create a plane geometry
-  let geometry = new THREE.PlaneGeometry(400, 40, 50, 50);
+  const geometry = new THREE.PlaneGeometry(400, 40, 50, 50);
 
-  // Shaders
-  let shaderMaterial = new THREE.ShaderMaterial({
+  // Create a shader material
+  const shaderMaterial = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     uniforms: uniforms,
   });
 
+  // Create a mesh using the geometry and shader material
   const plane = new THREE.Mesh(geometry, shaderMaterial);
-  plane.position.set(160, 10, 0)
+  plane.position.set(160, 10, 0);
+
   return plane;
 }
 

@@ -8,9 +8,8 @@ function loadSky(): THREE.Mesh {
   // Create the material for the skybox
   const textureLoader = new THREE.TextureLoader();
   const texture = textureLoader.load(skyboxImg);
-
   const material = new THREE.MeshBasicMaterial({ map: texture });
-  
+
   // Create the plane mesh
   const plane = new THREE.Mesh(geometry, material);
   plane.position.set(20, 100, 0);
