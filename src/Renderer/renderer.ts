@@ -8,7 +8,7 @@ function loadRenderer(camera: THREE.PerspectiveCamera): THREE.WebGLRenderer {
 
     //Renderer
     const canvas = document.querySelector('.webgl') as HTMLCanvasElement | undefined;
-    const renderer = new THREE.WebGLRenderer({ canvas });
+    const renderer = new THREE.WebGLRenderer({ canvas, precision: 'mediump' });
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(2);
 
