@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import skyboxImg from './skybox.jpg'; // Assuming 'skybox.jpg' is in the same directory as this JavaScript file
+import skyboxImg from './GLB/skybox.jpg'; // Assuming 'skybox.jpg' is in the same directory as this JavaScript file
 
 function loadSky(): THREE.Mesh {
   // Create a plane geometry

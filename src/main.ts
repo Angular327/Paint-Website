@@ -5,6 +5,7 @@ import { loadRenderer } from './Renderer/renderer';
 import { loadCamera } from './Renderer/camera';
 import { loadSky } from './Objects/sky';
 import { loadSpawners } from './Objects/spawners';
+import { loadPaintBrush } from './Objects/paintBrush';
 import {
     leftPaint,
     rightPaint,
@@ -20,42 +21,34 @@ import laminateFloorTexture from './Textures/laminate_floor_02_diff_4k.jpg';
 
 import './style.css';
 
-// Initialize the scene and set up the environment
-function init(): void {
-    // Scene setup
+async function init(): Promise<void> {
     const scene = new THREE.Scene();
     const textureLoader = new THREE.TextureLoader();
 
-    // Camera setup
-    const camera = loadCamera();
-    scene.add(camera);
 
-    // Uniforms for the shader
     const uniforms = {
         color1: { value: new THREE.Vector3(1, 0, 0) },
         color2: { value: new THREE.Vector3(0, 1, 0) },
         texture1: { value: textureLoader.load(laminateFloorTexture) },
         u_resolution: { value: new THREE.Vector2(400, 40) },
-        u_bl: { value: new THREE.Vector2(leftPaint, 0.45) },
-        u_tr: { value: new THREE.Vector2(leftPaint + 0.001, 0.55) },
+        u_bl: { value: new THREE.Vector2(leftPaint, 0.43) },
+        u_tr: { value: new THREE.Vector2(leftPaint + 0.001, 0.57) },
     };
 
-    // Floor setup
-    const floor = loadFloor(uniforms);
-    scene.add(floor);
-
-    // Sky setup
+    const floor = loadFloor(uniforms);    
     const sky = loadSky();
-    scene.add(sky);
-
-    // Spawner objects setup
-    loadSpawners(scene);
-
-    // Renderer setup
+    const camera = loadCamera();
     const renderer = loadRenderer(camera);
+    const { handle, brush }: PaintBrush = await loadPaintBrush(scene);
+    const  spawnerObjects: Array<THREE.Mesh> = await loadSpawners(scene);
+
+    scene.add(floor);
+    scene.add(sky);
+    scene.add(camera);
+
+
     renderer.render(scene, camera);
 
-    // User interaction setup
     let x = 0.0;
     let dragVelocity = 0;
     let isDragging = false;
@@ -105,6 +98,8 @@ function init(): void {
 
         uniforms.u_tr.value.x = THREE.MathUtils.lerp(leftPaint, rightPaint, x);
         camera.position.x = THREE.MathUtils.lerp(leftCamera, rightCamera, x);
+        handle.position.x = THREE.MathUtils.lerp(-20, 360, x);
+        brush.position.x = THREE.MathUtils.lerp(-20, 360, x);
 
         window.requestAnimationFrame(loop);
     }
