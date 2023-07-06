@@ -4,7 +4,7 @@ import { loadFloor } from './Objects/floor';
 import { loadRenderer } from './Renderer/renderer';
 import { loadCamera } from './Renderer/camera';
 import { loadSky } from './Objects/sky';
-import { loadSpawners } from './Objects/spawners';
+//import { loadSpawners } from './Objects/spawners';
 import { loadPaintBrush } from './Objects/paintBrush';
 import {
     leftPaint,

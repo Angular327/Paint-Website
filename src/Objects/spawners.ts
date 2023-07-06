@@ -41,7 +41,7 @@ async function loadSpawners(scene: THREE.Scene): Promise<Array<THREE.Mesh>> {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
       },
       function (error) {
-        console.log(`An error happened: ${error}`);
+        reject(`An error happened: ${error}`);
       }
       );
     });
