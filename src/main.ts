@@ -35,17 +35,16 @@ async function init(): Promise<void> {
         u_tr: { value: new THREE.Vector2(leftPaint + 0.001, 0.57) },
     };
 
-    const floor = loadFloor(uniforms);    
+    const floor = loadFloor(uniforms);
     const sky = loadSky();
     const camera = loadCamera();
-    const renderer = loadRenderer(camera);
     const { handle, brush }: PaintBrush = await loadPaintBrush(scene);
-    const  spawnerObjects: Array<THREE.Mesh> = await loadSpawners(scene);
+    //const spawnerObjects: Array<THREE.Mesh> = await loadSpawners(scene);
+    const renderer = loadRenderer(camera);
 
     scene.add(floor);
     scene.add(sky);
     scene.add(camera);
-
 
     renderer.render(scene, camera);
 
@@ -53,6 +52,27 @@ async function init(): Promise<void> {
     let dragVelocity = 0;
     let isDragging = false;
     let previousMouseX = 0;
+
+    // Assuming you have a cube mesh called 'cube' in your scene
+
+    // Update the cube's matrix world to ensure accurate bounding box calculation
+    brush.updateMatrixWorld(true);
+
+    // Create a new Box3 object
+    var box = new THREE.Box3();
+
+    // Set the cube as the object for which we want to calculate the bounding box
+    box.setFromObject(brush);
+
+    // Retrieve the bounding box dimensions
+    var boxSize = new THREE.Vector3();
+    box.getSize(boxSize);
+
+    // Retrieve the minimum and maximum points of the bounding box
+    var minPoint = box.min;
+    var maxPoint = box.max;
+
+    console.log(minPoint, " ", maxPoint);
 
     window.addEventListener('wheel', handleMouseWheel);
 
@@ -100,6 +120,7 @@ async function init(): Promise<void> {
         camera.position.x = THREE.MathUtils.lerp(leftCamera, rightCamera, x);
         handle.position.x = THREE.MathUtils.lerp(-20, 360, x);
         brush.position.x = THREE.MathUtils.lerp(-20, 360, x);
+        brush.rotation.z = THREE.MathUtils.lerp(0, -524/2, x);
 
         window.requestAnimationFrame(loop);
     }
