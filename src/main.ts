@@ -53,27 +53,6 @@ async function init(): Promise<void> {
     let isDragging = false;
     let previousMouseX = 0;
 
-    // Assuming you have a cube mesh called 'cube' in your scene
-
-    // Update the cube's matrix world to ensure accurate bounding box calculation
-    brush.updateMatrixWorld(true);
-
-    // Create a new Box3 object
-    var box = new THREE.Box3();
-
-    // Set the cube as the object for which we want to calculate the bounding box
-    box.setFromObject(brush);
-
-    // Retrieve the bounding box dimensions
-    var boxSize = new THREE.Vector3();
-    box.getSize(boxSize);
-
-    // Retrieve the minimum and maximum points of the bounding box
-    var minPoint = box.min;
-    var maxPoint = box.max;
-
-    console.log(minPoint, " ", maxPoint);
-
     window.addEventListener('wheel', handleMouseWheel);
 
     document.addEventListener('mousedown', onMouseDown, false);

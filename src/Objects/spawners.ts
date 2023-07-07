@@ -18,7 +18,7 @@ async function loadSpawners(scene: THREE.Scene): Promise<Array<THREE.Mesh>> {
     ];
 
     loader.load(
-      '../src/Objects/GLB/Spawner.gltf',
+      'Spawner.gltf',
       function (gltf) {
         const spawnerObjects: THREE.Mesh[] = [];
 

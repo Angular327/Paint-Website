@@ -11,7 +11,7 @@ function loadPaintBrush(scene: THREE.Scene): Promise<PaintBrush> {
 
     loader.load(
       // Resource URL
-      '../src/Objects/GLB/Paint.glb',
+      '/Paint.glb',
       // Called when the resource is loaded
       function (gltf) {       
         let brush: THREE.Mesh = (gltf.scene.children[1] as THREE.Mesh).clone();
