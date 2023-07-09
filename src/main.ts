@@ -18,8 +18,6 @@ import {
     leftBrush,
     rightBrush,
     totalRotation,
-    planeLength,
-    midPoint,
 } from '../src/constants';
 
 // Textures
