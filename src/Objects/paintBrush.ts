@@ -32,7 +32,7 @@ function loadPaintBrush(scene: THREE.Scene): Promise<PaintBrush> {
       },
       // Called while loading is progressing
       function (xhr) {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+        console.log('Brush: ' + (xhr.loaded / xhr.total) * 100 + '% loaded');
       },
       // Called when loading has errors
       function (error) {

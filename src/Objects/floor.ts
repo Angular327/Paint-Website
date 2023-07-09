@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { midPoint, planeLength } from '../constants';
 
 // Vertex shader code
 export const vertexShader = `
@@ -37,7 +38,7 @@ export const fragmentShader = `
 
 function loadFloor(uniforms: any): THREE.Mesh {
   // Create a plane geometry
-  const geometry = new THREE.PlaneGeometry(400, 40, 50, 50);
+  const geometry = new THREE.PlaneGeometry(planeLength, 40, 50, 50);
 
   // Create a shader material
   const shaderMaterial = new THREE.ShaderMaterial({
@@ -48,7 +49,7 @@ function loadFloor(uniforms: any): THREE.Mesh {
 
   // Create a mesh using the geometry and shader material
   const plane = new THREE.Mesh(geometry, shaderMaterial);
-  plane.position.set(160, 10, 0);
+  plane.position.set(midPoint, 10, 0);
 
   return plane;
 }

@@ -4,8 +4,9 @@ import { loadFloor } from './Objects/floor';
 import { loadRenderer } from './Renderer/renderer';
 import { loadCamera } from './Renderer/camera';
 import { loadSky } from './Objects/sky';
-//import { loadSpawners } from './Objects/spawners';
+import { loadSpawners } from './Objects/spawners';
 import { loadPaintBrush } from './Objects/paintBrush';
+import { loadPlane } from './Objects/infoPlane';
 import {
     leftPaint,
     rightPaint,
@@ -14,6 +15,11 @@ import {
     scrollScale,
     dragScale,
     dragDeceleration,
+    leftBrush,
+    rightBrush,
+    totalRotation,
+    planeLength,
+    midPoint,
 } from '../src/constants';
 
 // Textures
@@ -35,16 +41,28 @@ async function init(): Promise<void> {
         u_tr: { value: new THREE.Vector2(leftPaint + 0.001, 0.57) },
     };
 
+    const planes: planeList = [
+        {
+            leftBound: 0,
+            rightBound: 20,
+            material: 0x0000ff
+        }
+    ]
+
+
     const floor = loadFloor(uniforms);
+    const plane = loadPlane();
     const sky = loadSky();
     const camera = loadCamera();
     const { handle, brush }: PaintBrush = await loadPaintBrush(scene);
-    //const spawnerObjects: Array<THREE.Mesh> = await loadSpawners(scene);
+    await loadSpawners(planes, scene);
     const renderer = loadRenderer(camera);
 
     scene.add(floor);
     scene.add(sky);
+    scene.add(plane);
     scene.add(camera);
+    plane.rotation.set(camera.rotation.x, camera.rotation.y, camera.rotation.z);
 
     renderer.render(scene, camera);
 
@@ -84,7 +102,17 @@ async function init(): Promise<void> {
     // Animation loop
     const loop = () => {
         renderer.render(scene, camera);
-
+        
+        plane.position.set(camera.position.x + 5, camera.position.y + 20, camera.position.z - 5);
+        let isPlaneVisible = false;
+        for(let i = 0; i < planes.length; i++) {
+            if(brush.position.x > planes[i].leftBound && brush.position.x < planes[i].rightBound) {
+                isPlaneVisible = true;
+                break;
+            }
+        }
+        plane.visible = isPlaneVisible;
+        
         x += dragVelocity * (2005 / window.innerWidth);
 
         if (dragVelocity > dragDeceleration || dragVelocity < -1 * dragDeceleration) {
@@ -97,9 +125,10 @@ async function init(): Promise<void> {
 
         uniforms.u_tr.value.x = THREE.MathUtils.lerp(leftPaint, rightPaint, x);
         camera.position.x = THREE.MathUtils.lerp(leftCamera, rightCamera, x);
-        handle.position.x = THREE.MathUtils.lerp(-20, 360, x);
-        brush.position.x = THREE.MathUtils.lerp(-20, 360, x);
-        brush.rotation.z = THREE.MathUtils.lerp(0, -524/2, x);
+        handle.position.x = THREE.MathUtils.lerp(leftBrush, rightBrush, x);
+        brush.position.x = THREE.MathUtils.lerp(leftBrush, rightBrush, x);
+        brush.rotation.z = THREE.MathUtils.lerp(0, totalRotation, x);
+
 
         window.requestAnimationFrame(loop);
     }

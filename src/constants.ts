@@ -1,12 +1,18 @@
-// Paint left and right bounds for lerp
+export const planeLength = 400;
+export const midPoint = 160;
+
 export const leftPaint = 0.05;
 export const rightPaint = 1;
+export const paintLength = planeLength - (planeLength * (1 - (rightPaint - leftPaint)));
 
-// Camera max and min for lerp
-export const leftCamera = -20;
-export const rightCamera = 380;
+export const leftCamera = -70;
+export const rightCamera = leftCamera + paintLength;
 
-// Scale for camera scroll
+export const leftBrush = -20;
+export const rightBrush = leftBrush + paintLength;
+
+export const totalRotation = -524/2;
+
 export const scrollScale = -0.00002;
 
 export const dragScale = -0.0001;
