@@ -19,14 +19,24 @@ async function loadSpawners(planes: planeList, scene: THREE.Scene): Promise<Arra
 
         for (let i = 0; i < planes.length; i++) {
           if (gltf.scene.children.length > 0 && gltf.scene.children[0] instanceof THREE.Mesh) {
-            const spawnerObject = (gltf.scene.children[0] as THREE.Mesh).clone();
+            const spawnerObjectLeft = (gltf.scene.children[0] as THREE.Mesh).clone();
 
-            spawnerObject.position.set(planes[i].leftBound, 9.9, 0);
-            spawnerObject.rotation.x = THREE.MathUtils.degToRad(90);
-            spawnerObject.material = new THREE.MeshBasicMaterial({ color: planes[i].material });
+            spawnerObjectLeft.position.set(planes[i].leftBound, 9.9, 0);
+            spawnerObjectLeft.rotation.x = THREE.MathUtils.degToRad(90);
+            spawnerObjectLeft.material = new THREE.MeshBasicMaterial({ color: planes[i].material });
             
-            scene.add(spawnerObject);
-            spawnerObjects.push(spawnerObject);
+            scene.add(spawnerObjectLeft);
+            spawnerObjects.push(spawnerObjectLeft);
+
+
+            const spawnerObjectRight = (gltf.scene.children[0] as THREE.Mesh).clone();
+
+            spawnerObjectRight.position.set(planes[i].rightBound, 9.9, 0);
+            spawnerObjectRight.rotation.x = THREE.MathUtils.degToRad(90);
+            spawnerObjectRight.material = new THREE.MeshBasicMaterial({ color: planes[i].material });
+            
+            scene.add(spawnerObjectRight);
+            spawnerObjects.push(spawnerObjectRight);
           }
         }
 

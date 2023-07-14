@@ -44,6 +44,11 @@ async function init(): Promise<void> {
             leftBound: 0,
             rightBound: 20,
             material: 0x0000ff
+        },
+        {
+            leftBound: 30,
+            rightBound: 40,
+            material: 0xFFF000
         }
     ]
 
