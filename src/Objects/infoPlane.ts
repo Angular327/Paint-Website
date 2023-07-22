@@ -10,6 +10,7 @@ function loadPlane(): THREE.Mesh {
 
     let plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2;
+    plane.position.z = 20;
 
     return plane;
 }

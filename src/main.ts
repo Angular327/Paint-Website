@@ -106,7 +106,7 @@ async function init(): Promise<void> {
     const loop = () => {
         renderer.render(scene, camera);
         
-        plane.position.set(camera.position.x + 5, camera.position.y + 20, camera.position.z - 5);
+        plane.position.set(camera.position.x + 5, camera.position.y + 20, camera.position.z - 2 );
         let isPlaneVisible = false;
         for(let i = 0; i < planes.length; i++) {
             if(brush.position.x > planes[i].leftBound && brush.position.x < planes[i].rightBound) {
